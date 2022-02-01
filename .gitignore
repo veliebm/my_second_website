@@ -1,4 +1,3 @@
 .vscode
 *.db
 *.pyc
-config.py
