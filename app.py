@@ -6,9 +6,9 @@ from functools import wraps
 # Create the application object.
 app = Flask(__name__)
 
-# config
-app.secret_key = "be kind"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
+# Config.
+import os
+app.config.from_object(os.environ["APP_SETTINGS"])
 
 # Create the sqlalchemy object
 db = SQLAlchemy(app)
