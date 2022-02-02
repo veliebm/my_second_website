@@ -52,4 +52,7 @@ dependencies:
     - werkzeug==0.9.6
     - wtforms==2.0.1
     - zipp==1.2.0
+variables:
+  APP_SETTINGS: config.DevelopmentConfig
+  DATABASE_URL: postgresql://localhost
 prefix: /home/veliebm/miniconda3/envs/flask
