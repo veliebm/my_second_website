@@ -54,4 +54,4 @@ dependencies:
     - zipp==1.2.0
 variables:
   APP_SETTINGS: config.DevelopmentConfig
-  DATABASE_URL: postgresql://localhost
+  DATABASE_URL: postgresql://localhost/discover_flask_dev
