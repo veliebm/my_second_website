@@ -1,6 +1,6 @@
-from app import db
+from project import db
 
-from models import User
+from project.models import User
 
 # Create the database and the db tables.
 db.create_all()
