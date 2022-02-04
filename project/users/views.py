@@ -45,8 +45,8 @@ def login():
                 session["logged_in"] = True
                 flash("You were logged in.")
                 return redirect(url_for("home.home"))
-        else:
-            error = "Invalid Credentials. Please try again."
+            else:
+                error = "Invalid credentials. Please try again."
     return render_template("login.html", error=error, form=form)
 
 
