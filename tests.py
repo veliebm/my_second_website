@@ -1,5 +1,6 @@
 import unittest
 from flask.ext.testing import TestCase
+from flask.ext.login import current_user
 from project import app, db
 from project.models import User, BlogPost
 
@@ -29,6 +30,25 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get("/login", content_type="html/text")
         self.assertEqual(response.status_code, 200)
 
+    # Ensure that the main page requires login.
+    def test_main_route_requires_login(self):
+        self.client = app.test_client(self)
+        response = self.client.get("/", follow_redirects=True)
+        self.assertIn(b"Please log in to access this page.", response.data)
+
+    # Ensure that posts show up on the main page.
+    def test_posts_show_up(self):
+        response = self.client.post(
+            "/login",
+            data=dict(username="admin", password="admin"),
+            follow_redirects=True
+        )
+        response = self.client.get("/", follow_redirects=True)
+        self.assertIn(b"Only a test", response.data)
+
+
+class UsersViewsTests(BaseTestCase):
+
     # Ensure that the login page loads correctly.
     def test_login_page_loads(self):
         response = self.client.get("/login", content_type="html/text")
@@ -36,12 +56,15 @@ class FlaskTestCase(BaseTestCase):
 
     # Ensure login behaves correctly given the correct credentials.
     def test_correct_login(self):
-        response = self.client.post(
-            "/login",
-            data=dict(username="admin", password="admin"),
-            follow_redirects=True
-        )
-        self.assertIn(b"You were logged in", response.data)
+        with self.client:
+            response = self.client.post(
+                "/login",
+                data=dict(username="admin", password="admin"),
+                follow_redirects=True
+            )
+            self.assertIn(b"You were logged in", response.data)
+            self.assertTrue(current_user.name == "admin")
+            self.assertTrue(current_user.is_active())
 
     # Ensure login behaves correctly given the incorrect credentials.
     def test_incorrect_login(self):
@@ -54,35 +77,20 @@ class FlaskTestCase(BaseTestCase):
 
     # Ensure logout behaves correctly.
     def test_logout(self):
-        self.client = app.test_client(self)
-        response = self.client.post(
-            "/login",
-            data=dict(username="admin", password="admin"),
-            follow_redirects=True
-        )
-        response = self.client.get("/logout", follow_redirects=True)
-        self.assertIn(b"You were logged out", response.data)
-
-    # Ensure that the main page requires login.
-    def test_main_route_requires_login(self):
-        self.client = app.test_client(self)
-        response = self.client.get("/", follow_redirects=True)
-        self.assertIn(b"You need to login first.", response.data)
+        with self.client:
+            response = self.client.post(
+                "/login",
+                data=dict(username="admin", password="admin"),
+                follow_redirects=True
+            )
+            response = self.client.get("/logout", follow_redirects=True)
+            self.assertIn(b"You were logged out", response.data)
+            self.assertFalse(current_user.is_active())
 
     # Ensure that the logout page requires login.
     def test_logout_route_requires_login(self):
         response = self.client.get("/logout", follow_redirects=True)
-        self.assertIn(b"You need to login first.", response.data)
-
-    # Ensure that posts show up on the main page.
-    def test_posts_show_up(self):
-        response = self.client.post(
-            "/login",
-            data=dict(username="admin", password="admin"),
-            follow_redirects=True
-        )
-        response = self.client.get("/", follow_redirects=True)
-        self.assertIn(b"Only a test", response.data)
+        self.assertIn(b"Please log in to access this page.", response.data)
 
 
 if __name__ == "__main__":
