@@ -16,6 +16,6 @@ alembic==0.6.6
 coverage==4.0a1
 gunicorn==19.0.0
 itsdangerous==0.24
-psycopg2==2.5.3
+psycopg2-binary==2.7.3.2
 py-bcrypt==0.4
 wsgiref==0.1.2
