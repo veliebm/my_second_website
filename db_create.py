@@ -1,13 +1,15 @@
 from project import db
+# from models import BlogPost
 
-from project.models import BlogPost
-
-# Create the database and the db tables.
+# create the database and the db table
 db.create_all()
 
-# Insert.
-db.session.add(BlogPost("Good", "I\'m good."))
-db.session.add(BlogPost("Well", "I\'m well."))
+# insert data
+# db.session.add(BlogPost("Good", "I\'m good."))
+# db.session.add(BlogPost("Well", "I\'m well."))
+# db.session.add(BlogPost("Excellent", "I\'m excellent."))
+# db.session.add(BlogPost("Okay", "I\'m okay."))
+# db.session.add(BlogPost("postgres", "we setup a local postgres instance"))
 
-# Commit the changes.
+# commit the changes
 db.session.commit()
