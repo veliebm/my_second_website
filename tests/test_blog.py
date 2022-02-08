@@ -1,5 +1,3 @@
-# tests/test_blog.py
-
 import unittest
 
 from base import BaseTestCase
@@ -7,7 +5,7 @@ from base import BaseTestCase
 
 class BlogPostTests(BaseTestCase):
 
-    # Ensure a logged in user can add a new post
+    # Ensure a logged in user can add a new post.
     def test_user_can_post(self):
         with self.client:
             self.client.post(
