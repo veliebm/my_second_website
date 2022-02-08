@@ -32,7 +32,3 @@ def cov():
     covdir = os.path.join(basedir, 'coverage')
     cov.html_report(directory=covdir)
     cov.erase()
-
-
-if __name__ == '__main__':
-    app.run()
