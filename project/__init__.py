@@ -3,9 +3,9 @@
 #################
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.bcrypt import Bcrypt
-from flask.ext.login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 import os
 
 ################
@@ -27,7 +27,7 @@ app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 
 
-from models import User
+from .models import User
 
 login_manager.login_view = "users.login"
 
