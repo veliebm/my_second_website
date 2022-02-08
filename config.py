@@ -5,7 +5,12 @@ import os
 class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = os.environ['SECRET_KEY']
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+
+    # Make URI compatible with SQLAlchemy on Heroku.
+    uri = os.environ('DATABASE_URL')
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = uri
 
 
 class TestConfig(BaseConfig):
