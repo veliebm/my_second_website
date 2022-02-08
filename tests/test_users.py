@@ -34,7 +34,7 @@ class TestUser(BaseTestCase):
                 password='python', confirm='python'
             ), follow_redirects=True)
             self.assertIn(b'Invalid email address.', response.data)
-            self.assertIn(b'/register/', request.url)
+            self.assertIn('/register/', request.url)
 
     # Ensure id is correct for the current/logged in user
     def test_get_by_id(self):
@@ -90,7 +90,7 @@ class UserViewsTests(BaseTestCase):
             )
             response = self.client.get('/logout', follow_redirects=True)
             self.assertIn(b'You were logged out', response.data)
-            self.assertFalse(current_user.is_active())
+            self.assertFalse(current_user.is_active)
 
     # Ensure that logout page requires user login
     def test_logout_route_requires_login(self):
