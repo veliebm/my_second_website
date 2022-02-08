@@ -7,9 +7,9 @@ class BaseConfig(object):
     SECRET_KEY = os.environ['SECRET_KEY']
 
     # Make URI compatible with SQLAlchemy on Heroku.
-    uri = os.environ('DATABASE_URL')
-    if uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
+    uri = os.environ['DATABASE_URL']
+    if uri.startswith('postgres://'):
+        uri = uri.replace('postgres://', 'postgresql://', 1)
     SQLALCHEMY_DATABASE_URI = uri
 
 
